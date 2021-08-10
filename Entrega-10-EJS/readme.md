@@ -9,9 +9,11 @@ A continuacion desarrollo algunas caracteresticas que observe de los diferentes 
 - Tiene una sintaxis propia que debemos conocer para poder utilizarlo.
 - La configuración inicial en express requiere mas lineas que con otros motores de plantillas.
 - Algunas partes de la sintaxis como el cierre de un if antes del else resultan confuso.
-```{{else}}
+```
+{{else}}
     <p class="txt-center">No hay productos</p>
-{{/if}}```
+{{/if}}
+```
 - Me agrada que la sintaxis de javascript embebido y html se mantengan visualmente separados.
 
  ## :thumbsdown: **PUG:**
