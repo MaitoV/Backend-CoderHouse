@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        const {Observable, fromEvent, map} = rxjs;
+
+window.onload = function () {
+    const input = document.getElementById('entrada');
+    const output = document.getElementById('salida');
+
+function reverseString(str) {
+    return str.split(" ").reverse().join(" ")
+}
+
+    const miCustomObservable = new Observable((observable) => {
+        let salida;
+        input.addEventListener('input', (e) => {
+            console.log(input.value);
+            if(input.value == 'error') {
+                observable.error('Error')
+            } if (input.value == 'complete') {
+                observable.complete()
+            } 
+            if (e.data == null) {
+                salida = output.value.substring(1)
+            }
+            else {
+                salida = reverseString(output.value);
+                salida += e.data;
+                salida = reverseString(salida)
+            }
+            observable.next(salida) //Eso lo manda a quien se suscriba
+        })
+    })
+
+    const miFuncionNext = (data) => {
+        output.value = data;
+    }
+
+    const miFuncionComplete = () => {
+        console.log('Complete');
+        input.disabled = true;
+        input.value = '';
+        output.value = '';
+        sub.unsubscribe;
+    }
+
+    const miFuncionError = (msg) => {
+        console.log('Error');
+        input.disabled = true;
+        input.value = '';
+        output.value = '';
+        sub.unsubscribe;
+    }
+
+    const handler = {
+        next: miFuncionNext,
+        error: miFuncionError,
+        complete: miFuncionComplete
+    }
+
+    const sub = miCustomObservable.suscribe(handler);
+
+    setTimeOut(() => {
+        console.log('Ya me canse de escuchar');
+        sub.unsubscribe();
+    }, 1000)
+}
+    </script>
+    <title>Observable- ejemplo profesor</title>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        function Usuario (name,surname) {
+            this.nombre = name;
+            this.apellido = surname;
+            this.libros = new Array;
+            this.mascotas = new Array;
+        }
+        Usuario.prototype.getFullName = function() {
+            console.log(`Hola, mi nombre es ${this.nombre} ${this.apellido}`);
+        }
+        Usuario.prototype.addMascota = function(nuevaMascota) {
+            this.mascotas.push(nuevaMascota);
+        }
+        Usuario.prototype.getMascotas = function(){
+            console.log(`${this.nombre} tiene ${this.mascotas.length} mascotas`)
+        }
+        Usuario.prototype.addBook = function(libro, autor){
+            let libroNuevo = {nombre: libro, autor: autor};
+            this.libros.push(libroNuevo);
+        }
+        Usuario.prototype.getBooks = function() {
+            return this.libros.map(libro => libro.nombre);
+        }
+
+        let p1 = new Usuario('Agustina','Cruz');
+
+        p1.getFullName()
+        p1.addMascota('Hamster');
+        p1.getMascotas()
+        p1.addBook('El señor de los anillos', 'Tolkien')
+        console.log(p1.getBooks());
+
+    </script>
+
+</body>
+</html>

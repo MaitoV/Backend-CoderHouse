@@ -1,0 +1,19 @@
+h1.h1 Productos Cargados
+
+if productsArray.length 
+    table.table.table-striped
+        thead
+            tr
+                th.col Nombre
+                th.col Precio
+                th.col Foto
+        tbody
+            each product in productsArray
+                tr
+                    td= product.title
+                    td= product.price 
+                    td
+                        - let thumbnail = '/uploads/' + product.thumbnail;
+                        img(src=thumbnail, class="img-thumbnail")
+else
+    p.txt-center No hay productos

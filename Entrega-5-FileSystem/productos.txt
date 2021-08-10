@@ -1,0 +1,14 @@
+[
+	{
+		"id": 1,
+		"title": "lapicera",
+		"price": 59.99,
+		"thumbnail": "http://www.photo2.com"
+	},
+	{
+		"id": 2,
+		"title": "guantes",
+		"price": 890.99,
+		"thumbnail": "http://www.photo3.com"
+	}
+]

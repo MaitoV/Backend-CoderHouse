@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src='https://unpkg.com/rxjs@%5E7/dist/bundles/rxjs.umd.min.js'></script>
+    <script>
+        //Esperamos a que cargue la pagina antes de capturar los elementos del DOM
+        window.addEventListener('load', () => {
+            //Capturamos el input y el span en el DOM
+            const input = document.getElementById('input');
+            const output = document.getElementById('output');
+
+            //Desestructuracion del objeto
+            const {Observable} = rxjs;
+            const { map } = rxjs.operators;
+
+            //Creamos el nuevo observable
+            const nuevoObservable = new Observable((observable) => {
+                input.addEventListener('input', () => {
+                    if(input.value == 'error' || input.value == 'Error') {
+                    observable.error('Error!')
+                    } 
+                    if(input.value == 'complete' || input.value == 'Complete') {
+                        observable.complete()
+                    } else {
+                        observable.next(input.value);
+                    }
+                })
+
+            })
+            
+            //Handler que manejara cada uno de los metodos del observable
+            const handler = {
+                next: (value) => output.innerText = value,
+                error: (value) => console.log(value),
+                complete: () => console.log('Listo, termine!')
+            }
+
+            //Funcion que espeja un string
+            function reverseString(string) {
+                return string.split("").reverse().join("")
+            }
+            
+            let suscripcion = nuevoObservable
+            .pipe(map((value) => reverseString(value)))
+            .subscribe(handler);
+
+            setTimeout(() => {
+                suscripcion.unsubscribe();
+                console.log('Pasaron 30 segundos, no escucho mas')
+                input.value = "";
+                input.disabled = true;
+                output.innerText = ""
+            }, 3000)
+        })
+    </script>
+    <title>Observable con pipe</title>
+</head>
+<body>
+    <input type="text" id="input">
+    <span id="output"></span>
+</body>
+</html>

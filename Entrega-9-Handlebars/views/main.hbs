@@ -1,0 +1,25 @@
+<h1 class="h1">Productos cargados</h1>
+
+{{#if productsArray.length}}
+<table class="table table-striped">
+    <thead>
+        <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Foto</th>
+        </tr>
+    </thead>
+    <tbody>
+         {{#each productsArray}}
+            <tr>
+            <td>{{title}}</td>
+            <td>{{price}}</td>
+            <td><img src="/uploads/{{thumbnail}}" class="img-thumbnail" alt="..."></td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{else}}
+    <p class="txt-center">No hay productos</p>
+{{/if}}
+

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src='https://unpkg.com/rxjs@%5E7/dist/bundles/rxjs.umd.min.js'></script>
+    <script>
+       //Evento que espera a que cargue la pagina antes de capturar elementos en el DOM
+       window.addEventListener('load', () => {
+           //Capturas los dos elementos input y output
+           let input = document.getElementById('input');
+           let output = document.getElementById('output');
+
+           //Desestructuracion de los objetos de rxjs
+           const {Observable} = rxjs;
+
+           //Creando observable
+           const nuevoObservable = new Observable((observable) => {
+               //Creamos un evento de escucha para cada vez que se ingresar info en el input
+               input.addEventListener('input', () => {
+                        if(input.value == 'error' || input.value == 'Error') {
+                            observable.error('Error!')
+                        }
+                        if(input.value == 'complete' || input.value == 'Complete') {
+                            observable.complete()
+                        } else {
+                            //Tomamos el string que viene del input, lo sliceamos letra por letra, le damos la vuelta con el metodo reverse y luego volvemos a unificar la palabra con join
+                            let reverseString = input.value.split("").reverse().join("");
+                            observable.next(reverseString);
+                        }
+                })
+
+           })
+           //Creamos el handler que va a manejar cada metodo del objeto
+           const handler = {
+               //Next reciba el string dado vuelta desde el observable y se lo pasa al output
+               next: (reverseString) => output.innerText = reverseString,
+               complete: () => console.log('Listo!, completo'),
+               error: (value) => console.log(value)
+           }
+           //Nos suscribimos al objeto con el handler que creamos que maneja cada uno de los metodos del objeto observable
+           let suscripcion = nuevoObservable.subscribe(handler);
+
+           //Esta funcion limpiara el input y lo deshabilitara para que no se pueda escribir mas en el. Tambien limpiara el parrafo con los registros que generamos
+           const cleaningFunction = () => {
+               input.value = "";
+               input.disabled = true;
+               output.innerText = "";
+           }
+
+           //Pasados los 3 segundos nos desuscribiremos del objeto y se activara la funcion de limpieza
+           setTimeout(() => {
+                suscripcion.unsubscribe();
+                console.log('Pasaron 30 segundos, no escucho mas');
+                cleaningFunction()
+           }, 3000)
+
+       })
+    </script>
+    <title> Observable - sin pipe</title>
+</head>
+<body>
+    <input id="input" type="text">
+    <span id="output"></span>
+
+    <!--
+        CONSIGNA 1:
+        - Realizar un documento web que contenga un input y a medida de que escribo se vaya mostrando a la derecha el texto en forma espejada. Utilizar un observable para realizar esa funcion
+        - Este comportamiento estara disponible 30 segundos. Luego de este tiempo, se realizara una desuscripcion automatica.
+        -Si el lapso de tiempo activo se escribe "error", el Observable terminara por error. Si se ingresa "complete", el observable terminara en forma normal. Indicar por consola la razon del cierre de la funcion.
+        - Una vez que el Observable no este mas operativo, desregistrar el evento de entrada, deshabilitar la escritura del input y borrar el resultado de la operacion
+    -->
+</body>
+</html>

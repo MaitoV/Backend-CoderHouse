@@ -1,0 +1,16 @@
+{
+  "name": "entrega-2-typescript",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "compile": ".\\node_modules\\.bin\\tsc index",
+    "start": "node index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Maito",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.3.5"
+  },
+  "description": ""
+}

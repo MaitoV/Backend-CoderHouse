@@ -1,0 +1,14 @@
+.img-thumbnail {
+    max-width: 200px;
+}
+.table{
+    max-width: 50vw;
+    min-width: 300px;
+    margin: 0 auto;
+}
+.h1{
+    text-align: center;
+}
+.txt-center {
+    text-align: center;
+}
