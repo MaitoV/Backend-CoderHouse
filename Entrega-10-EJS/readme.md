@@ -9,9 +9,9 @@ A continuacion desarrollo algunas caracteresticas que observe de los diferentes 
 - Tiene una sintaxis propia que debemos conocer para poder utilizarlo.
 - La configuración inicial en express requiere mas lineas que con otros motores de plantillas.
 - Algunas partes de la sintaxis como el cierre de un if antes del else resultan confuso.
-{{else}}
+`{{else}}
     <p class="txt-center">No hay productos</p>
-{{/if}}
+{{/if}}`
 - Me agrada que la sintaxis de javascript embebido y html se mantengan visualmente separados.
 
  :fa-comments: **PUG:**
@@ -23,3 +23,4 @@ A continuacion desarrollo algunas caracteresticas que observe de los diferentes 
 - Hay una clara separacion visual entre el javascript embebido y el html, lo cual hace mas facil identificar y encontrar cada parte cuando tenemos un codigo muy extenso.
 - No requiere aprender una nueva sintaxis, podemos utilizar javascript tal y como lo utilizariamos normalmente. En este sentido lo encuentro mas intuitivo.
 - Podemos implementar toda la logica de javascript que deseemos.
+
