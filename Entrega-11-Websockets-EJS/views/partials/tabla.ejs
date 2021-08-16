@@ -1,0 +1,22 @@
+<h1 class="h1"> Productos Cargados</h1>
+<% if(productsArray.length > 0) { %>
+    <table class="table table-striped">
+        <thead>
+            <th class="col">Nombre</th>
+            <th class="col">Precio</th>
+            <th class="col">Foto</th>
+        </thead>
+        <tbody>
+            <% productsArray.forEach(product => { %>
+                <tr>
+                    <td> <%= product.title %> </td>
+                    <td> <%= product.price %> </td>
+                    <td> <img class="img-thumbnail" src="/uploads/<%= product.thumbnail %> "> </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+<% } else { %>
+    <p class="txt-center">No hay productos</p>
+<% } %>
+
