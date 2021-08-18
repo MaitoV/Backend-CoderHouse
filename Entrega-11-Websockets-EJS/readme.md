@@ -1,4 +1,4 @@
-# Entrega 11: WEBSOCKETS + MOTOR DE PLANTILLAS
+# 🚀 Entrega 11: WEBSOCKETS + MOTOR DE PLANTILLAS
 
 ### Consigna 🔧
 Modificar el último entregable para que disponga de un canal de websocket que permita representar, por debajo del formulario de ingreso, una tabla con la lista de productos en tiempo real.
