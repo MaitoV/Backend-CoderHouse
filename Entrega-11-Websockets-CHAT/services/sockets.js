@@ -1,6 +1,6 @@
 const io = require('socket.io');
 const {Products, arrayProducts} = require('../utils/classProducts.js');
-const { addUser, getUsers, messageFormat, findUser, arrayUsers } = require('../utils/chatUtils'); 
+const { addUser, getUsers, messageFormat, findUser, getRandomAvatar } = require('../utils/chatUtils'); 
 
 let initWebsocketServer = (httpServer) => {
     const WSServer = io(httpServer);
@@ -9,8 +9,11 @@ let initWebsocketServer = (httpServer) => {
         console.log('Un nuevo cliente se conecto!');
 
         /* Websockets que controlan el chat */
-        socket.on('initChat', (userEmail) => { //Socket que maneja el evento del ingreso de un nuevo usuario
-            addUser(socket.client.id, userEmail);
+        socket.on('initChat', (userEmail) => { 
+            //Elegimos un avatar random
+            let newAvatar = getRandomAvatar();
+            //Socket que maneja el evento del ingreso de un nuevo usuario
+            addUser(socket.client.id, userEmail, newAvatar);
             //Emito un mensaje de bienvenida solo al usuario que se acaba de unir
             newMessage = messageFormat(undefined,`${userEmail}, bienvenido al chat!`)
             socket.emit('welcome', newMessage);

@@ -6,10 +6,11 @@ const readFile = (fileName) => {
         let fileParseado = JSON.parse(readFile);
         return fileParseado
 }
-const addUser = (socketId, userEmail) => {
+const addUser = (socketId, userEmail, avatarPic) => {
     let newUser = {
         id: socketId,
-        email: userEmail
+        email: userEmail,
+        avatar: avatarPic
     }
     let usersArray = readFile('users.json');
     usersArray.push(newUser);
@@ -38,9 +39,14 @@ const messageFormat = (email, msg) => {
     fs.writeFileSync('./utils/messages.json', JSON.stringify(messagesArray, null, '\t'))
     return newMessage;
 }
+const getRandomAvatar = () => {
+    let randomNumber = Math.floor(Math.random() * (10 - 1)) + 1;
+    return `avatar${randomNumber}`;
+}
 module.exports = {
     addUser,
     getUsers,
     messageFormat,
-    findUser
+    findUser,
+    getRandomAvatar
 }
