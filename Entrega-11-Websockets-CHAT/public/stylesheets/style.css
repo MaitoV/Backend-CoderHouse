@@ -75,6 +75,14 @@
 .user-email {
     color: #828282;
 }
+.fa, .fas {
+    font-size: 1.5rem;
+}
+#submitMessage {
+    padding-top: 30px;
+    padding-right: 30px;
+}
+
 
 
 

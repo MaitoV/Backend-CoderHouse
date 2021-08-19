@@ -1,20 +1,20 @@
 const moment = require('moment');
-
-const arrayUsers = [ ];
+let arrayUsers = [];
 
 const addUser = (socketId, userEmail) => {
-    const user = {
+    let newUser = {
         id: socketId,
         email: userEmail
     }
-    arrayUsers.push(user);
-    return arrayUsers
+    return arrayUsers.push(newUser);
+}
+const findUser = (id) => {
+    return arrayUsers.filter((aUser) => aUser.id === id)
 }
 const getUsers = () => {
     return arrayUsers
 }
 const messageFormat = (email, msg) => {
-    console.log('Me activaron')
     return {
         email: email,
         msg: msg,
@@ -24,5 +24,7 @@ const messageFormat = (email, msg) => {
 module.exports = {
     addUser,
     getUsers,
-    messageFormat
+    messageFormat,
+    findUser,
+    arrayUsers
 }

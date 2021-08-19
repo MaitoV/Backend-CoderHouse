@@ -46,6 +46,10 @@ const wrapperInitChat = document.getElementById('initChatWrapper');
 const messagesWrapper = document.getElementById('messagesWrapper');
 //Contenedor de los usuarios conectados
 const usersListContainer = document.getElementById('usersList');
+//Boton de enviar nuevo mensaje
+const btnNewMessage = document.getElementById('submitMessage');
+// input del mensaje
+let inputMessage = document.getElementById('inputMessage');
 let userEmail;
 
 submitInitChat.addEventListener('click', () => {
@@ -90,11 +94,32 @@ submitInitChat.addEventListener('click', () => {
             </div>
           </div> `
         }).join(' ')
-        usersListContainer.innerHTML += usersList;
+        usersListContainer.innerHTML = usersList;
     })
-
-    
 })
+//Evento que escucha cada vez que alguien sumitea un nuevo mensaje en el chat
+btnNewMessage.addEventListener('click', (e) => {
+    e.preventDefault();
+    inputMessage = inputMessage.value;
+    //Socket que emite un nuevo mensaje
+    socket.emit('newMessage', inputMessage);
+})
+//Socket que recibe la llegada de nuevos mensajes a todos los usuarios
+socket.on('updateMessages', (msg) => {
+    console.log(msg.email);
+
+    messagesWrapper.innerHTML += `
+        <div class=" media w-50 mb-3">
+            <span class="user-email">${msg.email}</span>
+          <div class="media-body ml-3">
+            <div class="bg-light rounded py-2 px-3 mb-2">
+              <p class="text-small mb-0 text-muted">${msg.msg}</p>
+            </div>
+            <p class="small text-muted">${msg.time}</p>
+          </div>
+        </div>`
+})
+
 
 
 
