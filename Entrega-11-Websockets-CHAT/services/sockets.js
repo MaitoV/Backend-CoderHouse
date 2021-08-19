@@ -1,6 +1,6 @@
 const io = require('socket.io');
 const {Products, arrayProducts} = require('../utils/classProducts.js');
-const { addUser } = require('../utils/chatUtils'); 
+const { addUser, getUsers, messageFormat } = require('../utils/chatUtils'); 
 
 let initWebsocketServer = (httpServer) => {
     const WSServer = io(httpServer);
@@ -10,9 +10,18 @@ let initWebsocketServer = (httpServer) => {
         /* Websockets que controlan el chat */
         socket.on('initChat', (userData) => { //Socket que maneja el evento del ingreso de un nuevo usuario
             let usersArray = addUser(socket.client.id, userData);
-            const welcomeMessage = 'Bienvenido al chat!'
-            socket.emit('welcome', welcomeMessage);
-            WSServer.emit('getUsers', usersArray);
+            let message;
+            //Emito un mensaje de bienvenida solo al usuario que se acaba de unir
+            newMessage = messageFormat(undefined,`${userData}, bienvenido al chat!`)
+            console.log(newMessage)
+            socket.emit('welcome', newMessage);
+            //Aviso a todos los usuarios conectados que se unio un nuevo usuario menos al que se acaba de unir
+            newMessage = messageFormat(undefined, `${userData}! se unio al chat`)
+            console.log(newMessage)
+            socket.broadcast.emit('userJoin', newMessage);
+            let usersOnline = getUsers();
+            //Paso el listado actualizado de todos los usuarios
+            socket.emit('getUsers', usersOnline);
         })
 
         /* Websockets que controlan la creacion y actualizacion de los productos */
