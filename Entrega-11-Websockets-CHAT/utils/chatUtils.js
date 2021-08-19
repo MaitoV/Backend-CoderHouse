@@ -19,9 +19,9 @@ const addUser = (socketId, userEmail, avatarPic) => {
     return newUser;
 }
 const findUser = (id) => {
-    let usersArray = readFile('users.json');
-    usersArray.filter((aUser) => aUser.id === id);
-    return usersArray;
+    let arrayUsers = readFile('users.json');
+    arrayUsers.filter((aUser) => aUser.id === id)
+    return arrayUsers;
 }
 const getUsers = () => {
     let usersArray = readFile('users.json')
