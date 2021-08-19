@@ -67,6 +67,7 @@
   }
 .chat-wrapper {
     margin-top: 15px;
+    margin-bottom: 30px;
     background-color: #eee;
 }
 .rigth {
@@ -81,6 +82,14 @@
 #submitMessage {
     padding-top: 30px;
     padding-right: 30px;
+}
+#chat-wrapper {
+    width: 100vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+.none {
+    display: none;
 }
 
 

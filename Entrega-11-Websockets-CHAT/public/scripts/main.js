@@ -42,6 +42,8 @@ socket.on('productList', (data) => {
 const submitInitChat = document.getElementById('initChat');
 //Contenedor del inicio del chat para colocar tu mail
 const wrapperInitChat = document.getElementById('initChatWrapper');
+//Div que contiene todo el chat
+const chatWrapper = document.getElementById('chat-wrapper');
 //Contenedor de las burbujas de chat
 const messagesWrapper = document.getElementById('messagesWrapper');
 //Contenedor de los usuarios conectados
@@ -54,6 +56,7 @@ let userEmail;
 
 submitInitChat.addEventListener('click', () => {
     userEmail = document.getElementById('email').value;
+    chatWrapper.classList.toggle('none');
     wrapperInitChat.style.setProperty("display", "none", "important");
     //Emite el evento de unirse al chat
     socket.emit('initChat', userEmail);
@@ -100,14 +103,14 @@ submitInitChat.addEventListener('click', () => {
 //Evento que escucha cada vez que alguien sumitea un nuevo mensaje en el chat
 btnNewMessage.addEventListener('click', (e) => {
     e.preventDefault();
-    inputMessage = inputMessage.value;
+    let message = inputMessage.value;
     //Socket que emite un nuevo mensaje
-    socket.emit('newMessage', inputMessage);
+    socket.emit('newMessage', message);
+    //Elimina el texto escrito en el input
+    inputMessage.value = ' ';
 })
 //Socket que recibe la llegada de nuevos mensajes a todos los usuarios
 socket.on('updateMessages', (msg) => {
-    console.log(msg.email);
-
     messagesWrapper.innerHTML += `
         <div class=" media w-50 mb-3">
             <span class="user-email">${msg.email}</span>
@@ -117,7 +120,7 @@ socket.on('updateMessages', (msg) => {
             </div>
             <p class="small text-muted">${msg.time}</p>
           </div>
-        </div>`
+        </div>`;
 })
 
 
