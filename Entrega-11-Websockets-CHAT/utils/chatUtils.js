@@ -18,20 +18,21 @@ const addUser = (socketId, userEmail, avatarPic) => {
 
     return newUser;
 }
-const findUser = (id) => {
-    let arrayUsers = readFile('users.json');
-    arrayUsers.filter((aUser) => aUser.id === id)
-    return arrayUsers;
+const findUser = (socketId) => {
+    let usersList = readFile('users.json');
+    let userFound = usersList.filter((aUser) => aUser.id === socketId)
+    return userFound;
 }
 const getUsers = () => {
     let usersArray = readFile('users.json')
     return usersArray;
 }
 
-const messageFormat = (email, msg) => {
+const messageFormat = (email, msg, avatar) => {
     let newMessage = {
         email: email,
         msg: msg,
+        avatar: avatar,
         time: moment().format('DD/MM/YYYY | h:mm:ss')
     }
     let messagesArray = readFile('messages.json');

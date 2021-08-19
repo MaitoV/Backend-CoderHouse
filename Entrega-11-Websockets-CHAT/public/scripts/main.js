@@ -111,8 +111,10 @@ btnNewMessage.addEventListener('click', (e) => {
 })
 //Socket que recibe la llegada de nuevos mensajes a todos los usuarios
 socket.on('updateMessages', (msg) => {
+  console.log(msg)
     messagesWrapper.innerHTML += `
         <div class=" media w-50 mb-3">
+        <img src="${msg.avatar}.png" alt="user" width="50" class="rounded-circle">
             <span class="user-email">${msg.email}</span>
           <div class="media-body ml-3">
             <div class="bg-light rounded py-2 px-3 mb-2">

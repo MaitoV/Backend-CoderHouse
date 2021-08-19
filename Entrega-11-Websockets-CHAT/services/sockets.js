@@ -25,9 +25,9 @@ let initWebsocketServer = (httpServer) => {
             WSServer.emit('getUsers', usersOnline);
         })
         socket.on('newMessage', (msg) => {
-            console.log(socket.client.id)
            let currentUser = findUser(socket.client.id);
             message = messageFormat(currentUser[0].email, msg, currentUser[0].avatar);
+            console.log(message)
            WSServer.emit('updateMessages', message);
 
         })
