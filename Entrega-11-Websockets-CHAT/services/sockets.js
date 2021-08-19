@@ -17,7 +17,7 @@ let initWebsocketServer = (httpServer) => {
             //Aviso a todos los usuarios conectados que se unio un nuevo usuario menos al que se acaba de unir
             newMessage = messageFormat(undefined, `${userEmail}! se unio al chat`)
             socket.broadcast.emit('userJoin', newMessage);
-            let usersOnline = getUsers();
+           let usersOnline = getUsers();
             //Paso el listado actualizado de todos los usuarios
             WSServer.emit('getUsers', usersOnline);
         })

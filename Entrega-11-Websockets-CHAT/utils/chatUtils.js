@@ -1,30 +1,46 @@
 const moment = require('moment');
-let arrayUsers = [];
+const fs = require('fs');
 
+const readFile = (fileName) => {
+        let readFile = fs.readFileSync(`./utils/${fileName}`, 'utf-8');
+        let fileParseado = JSON.parse(readFile);
+        return fileParseado
+}
 const addUser = (socketId, userEmail) => {
     let newUser = {
         id: socketId,
         email: userEmail
     }
-    return arrayUsers.push(newUser);
+    let usersArray = readFile('users.json');
+    usersArray.push(newUser);
+    fs.writeFileSync('./utils/users.json', JSON.stringify(usersArray, null, '\t'))
+
+    return newUser;
 }
 const findUser = (id) => {
-    return arrayUsers.filter((aUser) => aUser.id === id)
+    let usersArray = readFile('users.json');
+    usersArray.filter((aUser) => aUser.id === id);
+    return usersArray;
 }
 const getUsers = () => {
-    return arrayUsers
+    let usersArray = readFile('users.json')
+    return usersArray;
 }
+
 const messageFormat = (email, msg) => {
-    return {
+    let newMessage = {
         email: email,
         msg: msg,
         time: moment().format('DD/MM/YYYY | h:mm:ss')
     }
+    let messagesArray = readFile('messages.json');
+    messagesArray.push(newMessage);
+    fs.writeFileSync('./utils/messages.json', JSON.stringify(messagesArray, null, '\t'))
+    return newMessage;
 }
 module.exports = {
     addUser,
     getUsers,
     messageFormat,
-    findUser,
-    arrayUsers
+    findUser
 }
