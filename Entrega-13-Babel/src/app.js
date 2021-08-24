@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const apiRouter = require('./routes/api.js');
 const http = require('http');
-const initWebsocketServer = require('./services/sockets');
 
 const app = express();
 const port = 8080;
@@ -15,11 +14,8 @@ app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'ejs');
 
 const httpServer = http.Server(app);
-initWebsocketServer(httpServer);
 
 httpServer.listen(port, () => console.log('Server up en puerto', port));
 
 app.use('/api', apiRouter);
-app.use('/', (req, res) => {
-    res.render('main')
-})
+
