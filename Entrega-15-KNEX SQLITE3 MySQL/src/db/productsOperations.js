@@ -29,9 +29,10 @@ class ProductsOperations {
                 throw ('El producto que estas intentando eliminar no existe')
             }
 
-            await fs.unlink(`public/uploads/${findProduct[0].thumbnail}`);
-
             await mysqlDB('products').where({id: ItemID}).del();
+
+            await fs.unlink(`public/uploads/${findProduct[0].thumbnail}`);
+            
         } catch (error) {
             throw error;
         }
