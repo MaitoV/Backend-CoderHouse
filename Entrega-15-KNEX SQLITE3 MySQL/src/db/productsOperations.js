@@ -4,30 +4,48 @@ const { mysqlDB } = require('./db');
 class ProductsOperations {
     
    async getAllProducts() {
-         const productsList = await mysqlDB.from('products').select();
-        return productsList;
+       try {
+            const productsList = await mysqlDB.from('products').select();
+
+            if(productsList.length == 0) throw('No hay productos cargados.')
+
+            return productsList;
+       } catch(error) {
+            throw error;
+       }
     }
 
     async getProductByID(productID) {
-        const getProduct = await mysqlDB.from('products').where({id: productID});
-        return getProduct;
+        try {
+            const getProduct = await mysqlDB.from('products').where({id: productID});
+
+            if(getProduct.length == 0) throw('El producto solicitado no existe');
+
+            return getProduct;
+        } catch (error) {
+            throw error;
+        }
     }
 
     async addProduct(title, price, thumbnail) {
-        const addNewProduct = await mysqlDB.from('products').insert({
-            title: title,
-            price: price,
-            thumbnail: thumbnail
-        });
-        return addNewProduct;
+        try {
+            if(!title || !price || !thumbnail|| typeof title != 'string' || typeof parseInt(price) != 'number') {
+                throw('La informacion ingresada es incorrecta, intenta nuevamente')
+            }
+            const addNewProduct = await mysqlDB.from('products').insert({
+                title: title,
+                price: price,
+                thumbnail: thumbnail
+            });
+        } catch (error) {
+            throw error
+        }
+
     }
 
     async delete(ItemID) {
         try {
             const findProduct = await this.getProductByID(ItemID);
-            if(findProduct.length == 0) {
-                throw ('El producto que estas intentando eliminar no existe')
-            }
 
             await mysqlDB('products').where({id: ItemID}).del();
 
