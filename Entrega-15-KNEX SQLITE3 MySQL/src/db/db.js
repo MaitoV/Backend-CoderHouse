@@ -6,6 +6,7 @@ const sqliteDB = knex({
     client: 'sqlite3',
     connection: {filename: './src/db/db.sqlite'}
 })
+
 const mysqlDB = knex({
     client: 'mysql',
     connection: {
@@ -17,12 +18,22 @@ const mysqlDB = knex({
 })
 
 const initDB = async () => {
-    const tableMessages = await sqliteDB.schema.hasTable('messages')
+    const tableMessages = await sqliteDB.schema.hasTable('messages');
     if(!tableMessages) {
         await sqliteDB.schema.createTable('messages', (messagesTable) => {
         messagesTable.increments();
+        messagesTable.string('socket_id');
         messagesTable.string('msg').notNullable();
-        messagesTable.timestamp('createdAt').defaultTo(knex.fn.now()); }) 
+        messagesTable.timestamp('createdAt').defaultTo(new Date());
+    }) 
+    }
+    const usersTable = await sqliteDB.schema.hasTable('users')
+    if(!usersTable) {
+        await sqliteDB.schema.createTable('users', (usersTable) => {
+            usersTable.string('socket_id').notNullable();
+            usersTable.string('email').notNullable();
+            usersTable.string('avatar').notNullable();
+        })
     }
 
     const tableProducts = await mysqlDB.schema.hasTable('products')

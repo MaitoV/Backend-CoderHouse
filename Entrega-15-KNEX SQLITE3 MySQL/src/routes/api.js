@@ -1,10 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const {Products, arrayProducts }= require('../utils/classProducts');
 const multer = require('multer');
 const productsController = require('../controllers/products');
-const productsOperations = require('../db/productsOperations');
 
 
 const destinationFolder = 'public/uploads';

@@ -4,8 +4,8 @@ const { mysqlDB } = require('./db');
 class ProductsOperations {
     
    async getAllProducts() {
-            const productsList = await mysqlDB.from('products').select();
-            return productsList;
+         const productsList = await mysqlDB.from('products').select();
+        return productsList;
     }
 
     async getProductByID(productID) {
@@ -32,7 +32,7 @@ class ProductsOperations {
             await mysqlDB('products').where({id: ItemID}).del();
 
             await fs.unlink(`public/uploads/${findProduct[0].thumbnail}`);
-            
+
         } catch (error) {
             throw error;
         }
