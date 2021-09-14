@@ -1,0 +1,20 @@
+> pwd
+> mongd --dbpath "/Users/maitov/Desktop/Coding Apuntes/Coder House/Back end/Entregas/Entrega-16-MongoDB"
+> mongo
+> show databases
+> use prueba
+> db.items.insertMany([{ 
+    "nombre": "Fideos",
+    "categoria": "Harina",
+    "stock": "20" },
+    { "nombre": "Leche",
+    "categoria": "Lacteos",
+    "stock": "30" },
+    { "nombre": "Crema",
+    "categoria": "Lacteos",
+    "stock": "15" }])
+> db.items.find()
+
+> show databases
+> show collections
+> db.items.find()

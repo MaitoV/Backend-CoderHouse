@@ -1,0 +1,99 @@
+> mongo
+> show dbs
+> use ecommerce
+> db.createCollection("mensajes")
+> db.createCollection("productos")
+> show collections
+> db.productos.insert([
+    {
+        "title": "Monstera Deliciosa Varietaga",
+        "precio": 3590,
+        "stock": 10,
+        "thumbnail": "https://www.fotomonstera2.com"
+    },
+    {
+        "title": "Maceta rectangular blanca 35 x 15",
+        "precio": 650,
+        "stock": 8,
+        "thumbnail": "https://www.matricemacetablanca.com"
+    },
+    {
+        "title": "Regadera plastica 5lt",
+        "precio": 1860,
+        "stock": 6,
+        "thumbnail": "https://www.regaderaroja6.com"
+    },
+    {
+        "title": "Pulverizador manual a presion",
+        "precio": 4890,
+        "stock": 4,
+        "thumbnail": "https://www.pulverizadorapresionmanual.com"
+    },
+    {
+        "title": "Planta de Palta joven 2 años",
+        "precio": 2755,
+        "stock": 2,
+        "thumbnail": "https://www.paltajoven.com"
+    }
+])
+> db.mensajes.insert([
+    {
+        socketID: "3245128482188AF",
+        avatar: "avatar2",
+        mensaje: "Hola! que tal?"
+    },
+    {
+        socketID: "34019374727126EA",
+        avatar: "avatar8",
+        mensaje: "Holas!"
+    },
+    {
+        socketID: "3245128482188AF",
+        avatar: "avatar2",
+        mensaje: "Aca probando el chat, llega?"
+    },
+    {
+        socketID: "34019374727126EA",
+        avatar: "avatar8",
+        mensaje: "Si si llega perfecto"
+    },
+    {
+        socketID: "3245128482188AF",
+        avatar: "avatar2",
+        mensaje: "Pasa un mate o tomas solo?"
+    }
+])
+> db.mensajes.find({})
+> db.productos.find({})
+> db.mensajes.estimatedDocumentCount()
+> db.productos.estimatedDocumentCount()
+> db.productos.insertOne({
+        "title": "Jazmin 4 estaciones injertado",
+        "precio": 3245,
+        "stock": 3,
+        "thumbnail": "https://www.jazmingardeniainjert.com"
+})
+> db.productos.find({title: "Monstera Deliciosa Varietaga"})
+> db.productos.find({"precio": {$lt: 1000}})   -> o tambien    db.productos.find({"precio": {$lt: 1000}}, {title:1})
+> db.productos.find({$and: [{precio: {$gte: 1000} }, {precio:{$lte: 3000} }] })
+> db.productos.find({"precio": {$gt: 3000}}) -> o tambien db.productos.find({"precio": {$gt: 3000}}, {title: 1})
+> db.productos.find({}).skip(2).limit(1).sort({precio: 1}, {title: 1})
+> db.productos.updateMany({}, {$set: {"stock": 100} })
+> db.productos.updateMany({"precio": {$gt: 4000}}, {$set: {"stock": 0} })
+> db.productos.deleteMany({"precio": {$lt: 1000} })
+
+> mongod
+> use admin
+> db.createUser({
+    user: "pepe",
+    pwd: "asd456",
+    roles: [
+        {role: "read", db: "ecommerce"}
+    ]
+})
+
+> mongo -u pepe -p asd456
+> use ecommerce
+> show collections
+> db.productos.find()
+> db.productos.insert({"title": "Pala pequeña", "precio": 580})
