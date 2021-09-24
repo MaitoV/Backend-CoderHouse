@@ -1,5 +1,7 @@
 const productsOperations = require("../db/productsOperations");
 
+const persistencia = tipoDePersistencia.Memoria; 
+
 class ProductsController {
     async getAll (req, res) {
         try {
