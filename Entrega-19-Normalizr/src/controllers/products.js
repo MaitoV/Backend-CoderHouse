@@ -1,7 +1,6 @@
 const productsOperations = require("../db/productsOperations");
-
-const persistencia = tipoDePersistencia.Memoria; 
-
+const productsApi = require('../api/productsApi');
+const apiProducts = new productsApi();
 class ProductsController {
     async getAll (req, res) {
         try {
@@ -76,6 +75,29 @@ class ProductsController {
              })
          }
      
+     }
+
+     get(req, res) {
+        const getAll = apiProducts.get();
+        if(!getAll.length) return res.status(404).json({error: 'Todavia no hay productos cargados'})
+
+        return res.status(200).json({data: getAll})
+     }
+     generate(req, res){
+         const cantidad = req.query.cant ? req.query.cant : 10;
+         if(cantidad == 0) return res.status(400).json({
+             error: 'La cantidad ingresada es incorrecta, no se puede generar 0 productos'
+         })
+         const newProducts = [];
+         for(let i = 0; i < cantidad; i++) {
+             newProducts.push(apiProducts.generateProducts());
+         }
+
+         return res.status(201).json({
+             msg: 'Los productos se crearon exitosamente',
+             data: newProducts
+         })
+
      }
 }
 

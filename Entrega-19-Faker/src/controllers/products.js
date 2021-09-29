@@ -1,8 +1,6 @@
 const productsOperations = require("../db/productsOperations");
 const productsApi = require('../api/productsApi');
 const apiProducts = new productsApi();
-
-
 class ProductsController {
     async getAll (req, res) {
         try {

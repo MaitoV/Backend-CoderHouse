@@ -50,16 +50,16 @@ class MessagesOperations {
         }
     }
 
-    async saveMessage(id, msg) {
+    async saveMessage(newMsg) {
         try {
-            const newMsg = {
-                socket_id: id,
-                msg: msg
-            }
-            await  mensajesModel.create(newMsg);
+           return await  mensajesModel.create(newMsg);
         } catch (error) {
             throw error;
         }
+    }
+
+    async getAllMessages() {
+        return await mensajesModel.find({});
     }
 }
 

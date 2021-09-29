@@ -3,8 +3,12 @@ const mongoose = require('mongoose');
 const mensajesCollection = 'mensajes';
 
 const mensajesSchema = new mongoose.Schema({
-    socket_id: {type: String, required: true},
-    msg: {type: String, required: true},
+    author: {
+        id: {type: String, required: true},
+        email: {type: String, required: true},
+        avatar: {type: String, required: true}
+    },
+    text: {type: String, required: true},
 }, {timestamps: true}, {versionKey: false});
 
 const mensajes = new mongoose.model(mensajesCollection, mensajesSchema);

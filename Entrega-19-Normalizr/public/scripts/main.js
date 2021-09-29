@@ -1,3 +1,4 @@
+const normalize = normalizr;
 const socket = io.connect();
 socket.emit('getProducts');
 
@@ -62,6 +63,7 @@ submitInitChat.addEventListener('click', () => {
     socket.emit('initChat', userEmail);
     //Escucha evento del mensaje del bienvenida al usuario que se esta uniendo
     socket.on('welcome', (data) => {
+      console.log(data);
         messagesWrapper.innerHTML += `
         <div class="rigth media w-50 ml-auto mb-3">
           <div class="media-body">

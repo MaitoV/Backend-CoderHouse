@@ -1,6 +1,8 @@
 const io = require('socket.io');
 const messagesOperations = require('../db/messagesOperations');
 const productsOperations = require('../db/productsOperations');
+const normalizr = require('../utils/normalizeMsgs');
+const normalizrMsgs = new normalizr();
 
 let initWebsocketServer = (httpServer) => {
     const WSServer = io(httpServer);
@@ -16,7 +18,13 @@ let initWebsocketServer = (httpServer) => {
             newMessage = messagesOperations.messageFormat('Roboti',`${userEmail}, bienvenido al chat!`)
             socket.emit('welcome', newMessage);
             
-            newMessage = messagesOperations.messageFormat('Roboti', `${userEmail}! se unio al chat`)
+            //MENSAJES NORMALIZADOS
+            const getAllMessages = await messagesOperations.getAllMessages();
+            const normalizeMsgs = normalizrMsgs.normalize(getAllMessages);
+            socket.emit('welcome', normalizeMsgs);
+
+            newMessage = messagesOperations.messageFormat('Roboti', `${userEmail}! se unio al chat`);
+
 
             socket.broadcast.emit('userJoin', newMessage);
             let usersOnline = await messagesOperations.getUsers();
@@ -25,9 +33,16 @@ let initWebsocketServer = (httpServer) => {
         })
         socket.on('newMessage', async (msg) => {
            let currentUser = await messagesOperations.findUser(socket.client.id);
-
-           const newMessage = messagesOperations.messageFormat(currentUser[0].email, msg, currentUser[0].avatar);
-            await messagesOperations.saveMessage(socket.client.id, msg);
+        
+           let newMessage = {
+               author: {
+                   id: currentUser[0].socket_id,
+                   email: currentUser[0].email,
+                   avatar: currentUser[0].avatar
+               },
+               text: msg
+           }
+            await messagesOperations.saveMessage(newMessage);
 
            WSServer.emit('updateMessages', newMessage);
         })
@@ -42,11 +57,6 @@ let initWebsocketServer = (httpServer) => {
 
             myWSServer.emit('productList', arrayProducts);
         }) */
-
-        socket.on('initChat', (userEmail) => {
-            console.log('Un nuevo usuario inicializo el chat!')
-
-        })
 
     })
 

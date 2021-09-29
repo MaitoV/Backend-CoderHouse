@@ -28,5 +28,10 @@ router.put('/productos/actualizar/:id', productsController.updateProduct);
 router.delete('/productos/borrar/:id', productsController.deleteProduct);
 
 
+
+router.get('/productos/vista-test', productsController.get);
+router.post('/productos/vista-test', productsController.generate);
+
+
 module.exports = router;
 
