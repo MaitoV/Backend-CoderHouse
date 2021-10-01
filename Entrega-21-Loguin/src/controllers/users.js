@@ -7,7 +7,7 @@ class usersController {
     }
     login(req, res){
         const {nombre, password} = req.body;
-        if(nombre === user && password == contrasena) res.render('main')
+        if(nombre === user && password == contrasena) res.render('main', {nombre: user})
         else res.send('Credenciales invalidas')
     }
 }

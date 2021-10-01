@@ -7,6 +7,9 @@
     min-width: 300px;
     margin: 0 auto;
 }
+#userHello {
+    padding-right: 5rem;
+}
 .h2{
     text-align: center;
     margin-top: 25px;
