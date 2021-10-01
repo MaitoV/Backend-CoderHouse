@@ -1,3 +1,4 @@
+const moment = require('moment');
 const user = 'panchito';
 const contrasena = 'panchirin21';
 
@@ -7,11 +8,16 @@ class usersController {
     }
     login(req, res){
         const {nombre, password} = req.body;
-        if(nombre === user && password == contrasena) res.render('main', {nombre: user})
-        else res.render('loguin', {error: 'Las credenciales proporcionadas son invalidas'})
+        if(nombre === user && password == contrasena) {
+            req.session.userName = nombre;
+            req.session.lastRequest = moment().format('hh:mm.ss');
+            res.render('main', {nombre: req.session.userName})
+        } else res.render('loguin', {error: 'Las credenciales proporcionadas son invalidas'})
     }
     logout(req, res){
-        res.render('logout', {nombre: user});
+        const userName = req.session.userName;
+        req.session.destroy();
+        res.render('logout', {nombre: userName});
     }
 }
 

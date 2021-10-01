@@ -5,12 +5,21 @@ const apiRouter = require('./routes/api');
 const http = require('http');
 const initWebsocketServer = require('./services/sockets');
 const DBService = require('./db/config/config');
+const session = require('express-session')
 
 const app = express();
 const port = 8080;
 
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
+
+const oneDay = 1000 * 60 * 60 * 24;
+app.use(session({ 
+    secret: 'Oeste.32.Fuego.49.Primavera', 
+    saveUninitialized: true, 
+    cookie: {maxAge: oneDay}, 
+    resave: true
+}))
 
 app.use(express.static(path.join(__dirname, '../public')));
 
