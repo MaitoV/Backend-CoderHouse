@@ -8,6 +8,12 @@
     <title>USERS LOGUIN</title>
 </head>
 <body>
+    <% if(locals.error) { %>
+        <div class="alert alert-danger" role="alert">
+            <p class="text-center">Las credenciales ingresadas son invalidas</p>
+        </div>
+    <% } %>
+
     <section class="vh-100">
         <div class="container py-5 h-100">
           <div class="row d-flex align-items-center justify-content-center h-100">

@@ -9,10 +9,15 @@
     <title></title>
 </head>
 <body>
-    <div class="alert alert-primary d-flex p-2 bd-highlight justify-content-center" role="alert">
-        <p id="userHello">Bienvenido nuevamente <%- nombre %> </p>
-        <button type="button" class="btn btn-primary">Desloguearme</button>
-      </div>
+    <% if(locals.nombre) { %>
+        <div class="alert alert-primary d-flex p-2 bd-highlight justify-content-center" role="alert">
+            <p id="userHello">Bienvenido nuevamente <%- nombre %> </p>
+            <form action="/api/users/logout" method="POST">
+                <button type="submit" class="btn btn-primary">Desloguearme</button>
+            </form>
+        </div>
+    <% } %>
+
     <%- include('./partials/form.ejs'); %>
     <%- include('./partials/tabla.ejs'); %>
     <%- include('./partials/chat.ejs'); %>

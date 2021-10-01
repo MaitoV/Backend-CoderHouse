@@ -35,6 +35,7 @@ router.post('/productos/vista-test', productsController.generate);
 
 router.get('/users/login', usersController.formLogin);
 router.post('/users/login', usersController.login);
+router.post('/users/logout', usersController.logout);
 
 
 module.exports = router;
