@@ -5,7 +5,8 @@ const apiRouter = require('./routes/api');
 const http = require('http');
 const initWebsocketServer = require('./services/sockets');
 const DBService = require('./db/config/config');
-const session = require('express-session')
+const session = require('express-session');
+const checkLogin = require('./middleware/checklogin');
 
 const app = express();
 const port = 8080;
@@ -13,11 +14,11 @@ const port = 8080;
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
-const oneDay = 1000 * 60 * 60 * 24;
+const oneMinute = 1000 * 60;
 app.use(session({ 
     secret: 'Oeste.32.Fuego.49.Primavera', 
     saveUninitialized: true, 
-    cookie: {maxAge: oneDay}, 
+    cookie: {maxAge: oneMinute}, 
     resave: true
 }))
 
@@ -27,7 +28,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use('/api', apiRouter);
-app.use('/', (req, res) => {
+app.use('/', checkLogin, (req, res) => {
     res.render('main')
 })
 
