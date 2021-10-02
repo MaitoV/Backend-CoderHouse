@@ -1,5 +1,5 @@
 const checkLogin = (req, res, next) => {
-    if(req.session) next();
+    if(req.session.userName) next();
     else res.redirect('/api/users/login');
 }
 

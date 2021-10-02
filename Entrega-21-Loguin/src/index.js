@@ -17,9 +17,9 @@ app.use(bodyParser.json());
 const oneMinute = 1000 * 60;
 app.use(session({ 
     secret: 'Oeste.32.Fuego.49.Primavera', 
-    saveUninitialized: true, 
+    saveUninitialized: false,
     cookie: {maxAge: oneMinute}, 
-    resave: true
+    resave: false
 }))
 
 app.use(express.static(path.join(__dirname, '../public')));
