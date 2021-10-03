@@ -7,19 +7,22 @@ const initWebsocketServer = require('./services/sockets');
 const DBService = require('./db/config/config');
 const session = require('express-session');
 const checkLogin = require('./middleware/checklogin');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const port = 8080;
 
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
+app.use(cookieParser());
+
 
 const oneMinute = 1000 * 60;
 app.use(session({ 
     secret: 'Oeste.32.Fuego.49.Primavera', 
     saveUninitialized: false,
     cookie: {maxAge: oneMinute}, 
-    resave: false
+    resave: true
 }))
 
 app.use(express.static(path.join(__dirname, '../public')));
