@@ -14,6 +14,7 @@ const port = 8080;
 
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, '../public')));
 app.use(cookieParser());
 
 
@@ -21,11 +22,9 @@ const oneMinute = 1000 * 60;
 app.use(session({ 
     secret: 'Oeste.32.Fuego.49.Primavera', 
     saveUninitialized: false,
+    resave: true,
     cookie: {maxAge: oneMinute}, 
-    resave: true
 }))
-
-app.use(express.static(path.join(__dirname, '../public')));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
