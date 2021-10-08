@@ -22,14 +22,12 @@ class MessagesOperations {
         return `avatar${randomNumber}`;
     }
 
-    messageFormat = (socketId, email, avatar, msg) => {
-        const newMessage = {
-            author: {
-                id: socketId,
-                email: email,
-                avatar: avatar
-            },
-            txt: msg
+    messageFormat = (email, msg, avatar) => {
+        let newMessage = {
+            email: email,
+            msg: msg,
+            avatar: avatar,
+            time: moment().format('DD/MM/YYYY | h:mm:ss')
         }
         return newMessage;
     }
@@ -52,13 +50,16 @@ class MessagesOperations {
         }
     }
 
-    async saveMessage(msg) {
+    async saveMessage(newMsg) {
         try {
-            console.log(msg);
-            await  mensajesModel.create(msg);
+           return await  mensajesModel.create(newMsg);
         } catch (error) {
             throw error;
         }
+    }
+
+    async getAllMessages() {
+        return await mensajesModel.find({});
     }
 }
 

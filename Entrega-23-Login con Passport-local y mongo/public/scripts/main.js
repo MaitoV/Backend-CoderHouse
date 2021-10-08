@@ -1,3 +1,4 @@
+const normalize = normalizr;
 const socket = io.connect();
 socket.emit('getProducts');
 
@@ -66,9 +67,9 @@ submitInitChat.addEventListener('click', () => {
         messagesWrapper.innerHTML += `
         <div class="rigth media w-50 ml-auto mb-3">
           <div class="media-body">
-          <span class="user-email">${data.author.email}</span>
+          <span class="user-email">${data.email}</span>
             <div class="bg_primary rounded py-2 px-3 mb-2">
-              <p class="text-small mb-0 text-white">${data.txt}</p>
+              <p class="text-small mb-0 text-white">${data.msg}</p>
             </div>
             <p class="small text-muted">${data.time}</p>
           </div>
@@ -79,9 +80,9 @@ submitInitChat.addEventListener('click', () => {
         messagesWrapper.innerHTML += `
         <div class="rigth media w-50 ml-auto mb-3">
           <div class="media-body">
-          <span class="user-email">${data.author.email}</span>
+          <span class="user-email">${data.email}</span>
             <div class="bg_primary rounded py-2 px-3 mb-2">
-              <p class="text-small mb-0 text-white">${data.txt}</p>
+              <p class="text-small mb-0 text-white">${data.msg}</p>
             </div>
             <p class="small text-muted">${data.time}</p>
           </div>
@@ -114,13 +115,14 @@ btnNewMessage.addEventListener('click', (e) => {
 })
 //Socket que recibe la llegada de nuevos mensajes a todos los usuarios
 socket.on('updateMessages', (msg) => {
+  console.log(msg)
     messagesWrapper.innerHTML += `
         <div class=" media w-50 mb-3">
-        <img src="${msg.author.avatar}.png" alt="user" width="50" class="rounded-circle">
-            <span class="user-email">${msg.author.email}</span>
+        <img src="${msg.avatar}.png" alt="user" width="50" class="rounded-circle">
+            <span class="user-email">${msg.email}</span>
           <div class="media-body ml-3">
             <div class="bg-light rounded py-2 px-3 mb-2">
-              <p class="text-small mb-0 text-muted">${msg.text}</p>
+              <p class="text-small mb-0 text-muted">${msg.msg}</p>
             </div>
             <p class="small text-muted">${msg.time}</p>
           </div>
