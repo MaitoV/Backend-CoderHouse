@@ -15,13 +15,13 @@ const registerFunc = async (req, username, password, done) => {
     try {
         const {username, email, password} = req.body;
         if(!username || typeof username !== 'string' || typeof email !== 'string' || !email || !password || typeof password !== 'string'){
-            return done(null, false, {message: 'La informacion ingresada es invalida'});
+            return done(null, false, {error: 'La informacion ingresada es invalida'});
         }
 
         const checkUsernameOrEmail = {$or: [{username: username}, {email: email}]};
         const findUser = await usersModel.findOne(checkUsernameOrEmail);
         if(findUser) {
-            return done(null, false, {message: 'El email o username ya se encuentra en uso'})
+            return done(null, false, {error: 'El usuario ya fue registrado'})
         } else {
             const userData = {
                 username,

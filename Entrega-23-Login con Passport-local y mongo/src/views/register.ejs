@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body class="register__body">
+    <% if(locals.error) { %>
+    <div class="alert alert-danger fixed-top" role="alert">
+            <p class="text-center"><%- error.error %> </p>
+    </div>
+    <% } %>
     <div class="registration-form">
         <form action="/api/users/register" method="POST">
             <div class="form-icon">

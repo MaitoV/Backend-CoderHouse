@@ -38,7 +38,7 @@ router.get('/users/login', usersController.formLogin);
 router.post('/users/login', usersController.login);
 router.post('/users/logout', usersController.logout);
 router.get('/users/register', usersController.registerForm);
-router.post('/users/register', passport.authenticate('signup'), usersController.registerUser);
+router.post('/users/register', usersController.registerUser);
 
 
 module.exports = router;

@@ -1,3 +1,4 @@
+const passport = require('../middleware/authentication');
 
 const user = 'panchito';
 const contrasena = 'panchirin21';
@@ -21,8 +22,16 @@ class usersController {
     registerForm(req, res){
         res.render('register');
     }
-    registerUser(req, res){
-       res.json({msg: 'login ok'})
+    registerUser(req, res, next){
+        passport.authenticate('signup', function (err, user, info) {
+            console.log(err, user, info);
+            if (err) {
+                return next(err);
+            }
+            if (!user) return res.render('register', {error: info})
+            
+            res.render('main', {nombre: user.username})
+          })(req, res, next);
     }
 }
 
