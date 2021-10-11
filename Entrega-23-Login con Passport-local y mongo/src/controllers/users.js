@@ -18,6 +18,12 @@ class usersController {
         req.session.destroy();
         res.render('logout', {nombre: userName});
     }
+    registerForm(req, res){
+        res.render('register');
+    }
+    registerUser(req, res){
+        res.send('Estoy registrando al usuario')
+    }
 }
 
 const usersCont = new usersController();

@@ -6,7 +6,7 @@ const http = require('http');
 const initWebsocketServer = require('./services/sockets');
 const DBService = require('./db/config/config');
 const session = require('express-session');
-const mongoStore= require('./utils/mongoSessionStore');
+const mongoStore = require('./utils/mongoSessionStore');
 const checkLogin = require('./middleware/checklogin');
 const cookieParser = require('cookie-parser');
 
@@ -33,6 +33,9 @@ app.use(session({
 app.use('/api', apiRouter);
 app.use('/', checkLogin, (req, res) => {
     res.render('main')
+})
+app.use('/register', (req, res) => {
+    res.render('register');
 })
 
 const httpServer = http.Server(app);

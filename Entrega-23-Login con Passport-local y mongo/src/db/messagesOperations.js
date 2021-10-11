@@ -1,5 +1,5 @@
 const moment = require('moment');
-const userModel = require('./models/users');
+const userModel = require('./models/usersChat');
 const mensajesModel = require('./models/mensajes');
 
 class MessagesOperations {
