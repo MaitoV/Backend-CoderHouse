@@ -4,6 +4,7 @@ const path = require('path');
 const multer = require('multer');
 const productsController = require('../controllers/products');
 const usersController = require('../controllers/users');
+const passport = require('../middleware/authentication');
 
 
 const destinationFolder = 'public/uploads';
@@ -37,7 +38,7 @@ router.get('/users/login', usersController.formLogin);
 router.post('/users/login', usersController.login);
 router.post('/users/logout', usersController.logout);
 router.get('/users/register', usersController.registerForm);
-router.post('/users/register', usersController.registerUser);
+router.post('/users/register', passport.authenticate('signup'), usersController.registerUser);
 
 
 module.exports = router;

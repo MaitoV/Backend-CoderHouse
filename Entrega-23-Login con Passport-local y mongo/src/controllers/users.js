@@ -22,7 +22,7 @@ class usersController {
         res.render('register');
     }
     registerUser(req, res){
-        res.send('Estoy registrando al usuario')
+       res.json({msg: 'login ok'})
     }
 }
 

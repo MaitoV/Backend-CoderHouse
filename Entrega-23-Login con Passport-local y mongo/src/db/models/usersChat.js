@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const usersCollection = 'users';
+const usersCollection = 'usersChat';
 
 const usersSchema = new mongoose.Schema({
     socket_id: {type: String, required: true},
