@@ -1,18 +1,14 @@
 const passport = require('../middleware/authentication');
-
-const user = 'panchito';
-const contrasena = 'panchirin21';
-
 class usersController {
     formLogin(req, res){
         res.render('loguin');
     }
-    login(req, res){
-        const {nombre, password} = req.body;
-        if(nombre === user && password == contrasena) {
-            req.session.userName = nombre;
-            res.render('main', {nombre: req.session.userName})
-        } else res.render('loguin', {error: 'Las credenciales proporcionadas son invalidas'})
+    login(req, res, next){
+        passport.authenticate('login', function (err, user, info) {
+            if(err) res.render('loguin', {error: err})
+            //if(user) res.render('main', {nombre: user.username});
+            if(info) res.render('loguin', info)
+        })(req, res, next);
     }
     logout(req, res){
         const userName = req.session.userName;
@@ -24,7 +20,6 @@ class usersController {
     }
     registerUser(req, res, next){
         passport.authenticate('signup', function (err, user, info) {
-            console.log(err, user, info);
             if (err) {
                 return next(err);
             }

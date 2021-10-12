@@ -36,8 +36,24 @@ const registerFunc = async (req, username, password, done) => {
         done(error)
     }
 };
+const loginFunc = async (req, username, password, done) => {
+    try {
+        const findUser = await usersModel.findOne({username});
+        if(!findUser){
+            return done(null, false, {error: 'El usuario no existe'})
+        }
+        const comparePassword = await findUser.isValidPassword(password);
+        if(!comparePassword){
+            return done(null, false, {error: 'La contraseña no coincide'})
+        }
+        return done(null, findUser);
+    } catch(error) {
+        done(error)
+    }
+}
 
 passport.use('signup', new LocalStrategy(strategyOptions, registerFunc));
+passport.use('login', new LocalStrategy(strategyOptions, loginFunc));
 
 passport.serializeUser((user, done) => {
     done(null, user._id)

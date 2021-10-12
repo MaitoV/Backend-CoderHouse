@@ -29,12 +29,12 @@ usersSchema.pre('save', async function (next) {
     next();
 })
 
-/*Metodo para el schema. metodo personalizado
-userSchema.methods.isValidPassword = async function(password){
+
+usersSchema.methods.isValidPassword = async function (password) {
     const user = this;
     const compare = await bcrypt.compare(password, user.password);
     return compare;
-}*/
+}
 
 const usersModel = mongoose.model(userCollection, usersSchema);
 module.exports = usersModel;
