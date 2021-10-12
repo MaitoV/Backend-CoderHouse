@@ -6,7 +6,7 @@ class usersController {
     login(req, res, next){
         passport.authenticate('login', function (err, user, info) {
             if(err) res.render('loguin', {error: err})
-            //if(user) res.render('main', {nombre: user.username});
+            if(user) res.render('main', {nombre: user.username});
             if(info) res.render('loguin', info)
         })(req, res, next);
     }
