@@ -1,17 +1,9 @@
-const passport = require('../middleware/authentication');
 class usersController {
     formLogin(req, res){
-        res.render('loguin');
-    }
-    login(req, res, next){
-        passport.authenticate('login', function (err, user, info) {
-            if(err) res.render('loguin', {error: err})
-            if(user) res.render('main', {nombre: user.username});
-            if(info) res.render('loguin', info)
-        })(req, res, next);
+        res.render('login');
     }
     logout(req, res){
-        const userName = req.session.userName;
+        const userName = req.user.displayName;
         req.session.destroy();
         res.render('logout', {nombre: userName});
     }
@@ -27,6 +19,13 @@ class usersController {
             
             res.render('main', {nombre: user.username})
           })(req, res, next);
+    }
+    profile(req, res){
+        const userData = req.user;
+        const fullName = userData.displayName;
+        const photo = userData.photos[0].value;
+        const email = userData.emails[0].value;
+        res.render('profile', {photo, email, fullName});
     }
 }
 
