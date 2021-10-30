@@ -35,7 +35,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/api', apiRouter);
-app.use('/', checkLogin, (req, res) => {
+app.use('/', /*checkLogin,*/ (req, res) => {
     res.render('main')
 })
 
