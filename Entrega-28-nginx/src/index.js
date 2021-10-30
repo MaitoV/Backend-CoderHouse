@@ -10,9 +10,11 @@ const mongoStore = require('./utils/mongoSessionStore');
 const checkLogin = require('./middleware/checklogin');
 const cookieParser = require('cookie-parser');
 const passport = require('./middleware/authentication');
+const minimist = require('minimist');
 
 const app = express();
-const port = 8080;
+const argumentos = minimist(process.argv.slice(2));
+const port = argumentos.puerto || 8080;
 
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
